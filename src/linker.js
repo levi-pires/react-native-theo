@@ -1,11 +1,17 @@
 const { spawn } = require("child_process");
-const { writeFileSync, existsSync, mkdirSync } = require("fs");
-const exceptionHandler = require("./exception-handler");
+
 const chalk = require("chalk");
+
 const axios = require("axios").default;
+
 const theo = require("theo");
+
 const path = require("path");
+const { writeFileSync, existsSync, mkdirSync } = require("fs");
+
 const css = require("css");
+
+const exceptionHandler = require("./exception-handler");
 const configHandler = require("./config-handler");
 
 const convertYaml = (srcArray) => {
@@ -124,6 +130,8 @@ const downloadFonts = (fonts) => {
     }
   });
 };
+
+// -------------------------------------------------------- Export --------------------------------------------------------
 
 module.exports = async () => {
   const config = configHandler.handle();

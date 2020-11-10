@@ -1,6 +1,6 @@
 {
   "name": "react-native-theo",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Theo handler for React Native",
   "repository": "github:levi-pires/react-native-theo",
   "author": "Levi Pires",
@@ -12,7 +12,7 @@
   "main": "./main.js",
   "types": "./main.d.ts",
   "files": [
-    "./defaults/"
+    "./"
   ],
   "devDependencies": {
     "@types/css": "^0.0.31",

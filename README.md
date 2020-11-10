@@ -34,7 +34,7 @@ This part is pretty straightforward. Just run `yarn theo-native convert-tokens`
 >
 > > input: ./tokens/tokens.yml
 > >
-> > output: ./src/tokens.ts
+> > output: ./src/tokens.ts -->
 > >
 > > > ```typescript
 > > > export const borderStyleDefault = "solid";

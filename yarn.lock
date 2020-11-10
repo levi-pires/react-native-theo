@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@types/css@^0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/css/-/css-0.0.31.tgz#235cf80e4991a9d769fd640b4b8644b0a4139895"
+  integrity sha512-Xt3xp8o0zueqrdIkAOO5gy5YNs+jYfmIUPeoeKiwrcmCRXuNWkIgR2Ph6vHuVfi1y6c9Tx214EQBWPEkU97djw==
+
 "@types/node@^14.14.6":
   version "14.14.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.6.tgz"
@@ -1356,18 +1361,6 @@ process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
-
-"react-native-theo@file:.":
-  version "0.1.0"
-  dependencies:
-    axios "^0.21.0"
-    chalk "^4.1.0"
-    commander "^6.2.0"
-    figlet "^1.5.0"
-    inquirer "^7.3.3"
-    prettier "^2.1.2"
-    react-native-theo "file:../../.cache/yarn/v6/npm-react-native-theo-0.1.0-90e3d908-7147-452e-b75b-6868fca34f64-1604869571510/node_modules/react-native-theo"
-    theo "^8.1.5"
 
 readable-stream@~2.3.6:
   version "2.3.7"

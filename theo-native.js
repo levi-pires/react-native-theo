@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 const commander = require("commander");
-const package = require("./package.json");
+const packageJ = require("./package.json");
 
 const converter = require("./src/converter");
 const initializer = require("./src/initializer");
 const linker = require("./src/linker");
 const descriptions = require("./src/descriptions");
 
-commander.version(package.version);
+commander.version(packageJ.version);
 
 commander
   .command("convert-tokens")

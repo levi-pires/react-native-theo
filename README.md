@@ -54,6 +54,10 @@ This part is pretty straightforward. Just run `yarn theo-native convert-tokens`
 
 ## API Usage
 
+Since React Native has a limited support to external fonts, I created this simple function.
+
+> Note: Mainly on Android, the output of the function has to be the same as the file name
+
 ```javascript
 const { renderNativeFont } = require('react-native-theo')
 

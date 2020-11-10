@@ -23,7 +23,6 @@ Before linking, you will have to set up the [react-native.config.js](#react-nati
 To link the fonts, run `yarn theo-native link-fonts`.
 
 > Note: I highly recommend you to use Google Fonts links
-
 > Note: The _.yml_ files that will be used on linking must follow [this](#font-token) format
 
 ### Convert Tokens
@@ -31,11 +30,10 @@ To link the fonts, run `yarn theo-native link-fonts`.
 This part is pretty straightforward. Just run `yarn theo-native convert-tokens`
 
 > Example:
-
+>
 > > input: ./tokens/tokens.yml
-
 > > output: ./src/tokens.ts
-
+> >
 > > > ```typescript
 > > > export const borderStyleDefault = "solid";
 > > > export const borderWidthNone = 0;

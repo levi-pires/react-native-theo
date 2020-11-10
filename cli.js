@@ -3,10 +3,10 @@
 const commander = require("commander");
 const packageJ = require("./package.json");
 
-const converter = require("./src/converter");
-const initializer = require("./src/initializer");
-const linker = require("./src/linker");
-const descriptions = require("./src/descriptions");
+const converter = require("./cli-src/converter");
+const initializer = require("./cli-src/initializer");
+const linker = require("./cli-src/linker");
+const descriptions = require("./cli-src/descriptions");
 
 commander.version(packageJ.version);
 

@@ -1,7 +1,7 @@
 module.exports = {
   styles: {
     files: ["./tokens/tokens.yml"],
-    output: { dir: "./src/tokens/", extension: "js", format: "module.js" },
+    output: { dir: "./src/tokens/", extension: ".js", format: "module.js" },
   },
 
   fonts: {

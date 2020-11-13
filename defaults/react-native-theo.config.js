@@ -5,7 +5,10 @@ module.exports = {
   },
 
   fonts: {
-    files: ["./tokens/fonts/index.yml"],
-    urls: ["https://fonts.googleapis.com/css2?family=Roboto&display=swap"],
+    files: ["./tokens/brand-01/typography/index.yml"],
+    urls: [
+      "https://fonts.googleapis.com/css2?family=Roboto",
+      "https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,900;1,700",
+    ],
   },
 };

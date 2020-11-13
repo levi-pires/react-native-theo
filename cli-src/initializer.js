@@ -13,6 +13,7 @@ const { existsSync, copyFileSync, writeFileSync } = require("fs");
 const exceptionHandler = require("./exception-handler");
 
 const inquirer = require("inquirer");
+const { tab } = require("./etc");
 
 const parseFiles = (list) => {
   if (list.length < 1) return "";
@@ -112,9 +113,9 @@ module.exports = (args) => {
   if (!existsSync(configHandler.path) || args.force) {
     console.log(
       chalk.blueBright(
-        figlet.textSync("\nReact\n  Native\n    Theo", "JS Block Letters")
+        figlet.textSync(`\nReact\n    Native\n        Theo`, "JS Block Letters")
       ),
-      "\n\n\n                            Welcome\n\n\n"
+      `\n\n\n${tab(5)}Welcome\n\n\n`
     );
 
     if (args.create) {

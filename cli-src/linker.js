@@ -14,6 +14,9 @@ const css = require("css");
 const exceptionHandler = require("./exception-handler");
 const configHandler = require("./config-handler");
 
+const { tab } = require("./etc");
+const { render } = require("./font-name-gen");
+
 const convertYaml = (srcArray) => {
   try {
     return srcArray.map((src) => {
@@ -27,7 +30,26 @@ const convertYaml = (srcArray) => {
         },
       });
 
-      return Object.values(eval(fonts));
+      const _return = {
+        family: [],
+        weight: [],
+      };
+
+      Object.values(eval(fonts)).forEach((item) => {
+        if (typeof item == "string") {
+          if (!_return.family.some((_item) => _item == item))
+            _return.family.push(item.split(" ").join("+"));
+        } else {
+          _return.weight.push(item);
+        }
+      });
+
+      return _return.family.map((fItem) => {
+        return _return.weight.map(
+          (wItem) =>
+            `https://fonts.googleapis.com/css2?family=${fItem}:wght@${wItem}`
+        );
+      });
     });
   } catch (err) {
     exceptionHandler(err, "try 'init -c -f' to update the config file");
@@ -39,32 +61,48 @@ const convertLink = (urls) => {
     try {
       const { data } = await axios.get(url);
 
-      const obj = css.parse(data);
+      const cssObj = css.parse(data);
 
-      return obj.stylesheet.rules.map((rule) => {
-        const fonts = [];
+      return cssObj.stylesheet.rules.map((rule) => {
+        const font = [];
 
         rule.declarations
           .filter((item) => item.property == "src")
           .forEach((declaration) => {
-            const regexp = /\(([^)]+)/;
+            const urlRegExp = /url\(([^)]+)/;
 
-            while (regexp.test(declaration.value)) {
-              const srcItem = regexp.exec(declaration.value)[1];
-              const srcItemWithoutQuote = srcItem.split("'").join("");
-
-              fonts.push(srcItemWithoutQuote);
-
-              declaration.value = declaration.value.replace(regexp, "");
-            }
+            const src = urlRegExp.exec(declaration.value)[1];
+            const srcWithoutQuote = src.split("'").join("");
+            font.push(srcWithoutQuote);
           });
 
-        fonts.shift();
+        rule.declarations
+          .filter((item) => item.property == "font-family")
+          .forEach((declaration) => {
+            const fontFamily = declaration.value.split(" ").join("-");
+            const fontFamilyWithoutQuote = fontFamily.split("'").join("");
+
+            const fontWeight = rule.declarations.filter(
+              (item) => item.property == "font-weight"
+            )[0].value;
+
+            const italic = rule.declarations.filter(
+              (item) => item.property == "font-style"
+            )[0].value;
+
+            font.push(
+              render({
+                fontFamily: fontFamilyWithoutQuote,
+                fontWeight,
+                italic: italic == "italic",
+              })
+            );
+          });
 
         return {
-          local: fonts[0],
-          src: fonts[1],
-          format: fonts[2].includes("true") ? "ttf" : "otf",
+          src: font[0],
+          local: font[1],
+          format: /[^.]+$/.exec(font[0]),
         };
       });
     } catch (err) {
@@ -75,15 +113,17 @@ const convertLink = (urls) => {
 
 const link = () => {
   console.log(
-    chalk.green("info"),
+    chalk.green("\ninfo"),
     "Running",
     chalk.blueBright("yarn react-native link")
   );
 
-  const yarn = spawn("yarn", ["react-native", "link"]);
+  const yarn = spawn("yarn", ["react-native", "link"], {
+    shell: process.env.OS && process.env.OS.includes("Windows"),
+  });
 
   yarn.stdout.on("data", (chunk) => {
-    console.log("      ", chunk.toString("utf-8").replace("\n", ""));
+    console.log(tab(3), chunk.toString("utf-8").replace("\n", ""));
   });
 
   yarn.stderr.on("data", (chunk) =>
@@ -107,11 +147,11 @@ const downloadFonts = (fonts) => {
       const out = path.resolve(outPath, `./${item.local}.${item.format}`);
 
       console.log(
-        chalk.green("info"),
+        chalk.green("\ninfo"),
         "Downloading from",
         chalk.gray(item.src),
         "to",
-        chalk.gray(out + "\n")
+        chalk.gray(out)
       );
 
       try {
@@ -138,17 +178,26 @@ module.exports = async () => {
 
   let fonts = [];
 
-  if (config.fonts.files) {
-    fonts = fonts.concat(convertYaml(config.fonts.files));
+  if (config.fonts) {
+    if (config.fonts.files) {
+      const parsedFonts = convertYaml(config.fonts.files).flat(2);
+
+      const convertedLinks = await Promise.all(convertLink(parsedFonts));
+
+      fonts = fonts.concat(convertedLinks);
+    }
+
+    if (config.fonts.urls) {
+      const convertedLinks = await Promise.all(convertLink(config.fonts.urls));
+
+      fonts = fonts.concat(convertedLinks);
+    }
+
+    downloadFonts(fonts);
+  } else {
+    exceptionHandler(
+      new Error("fonts is an empty object"),
+      "check react-native-theo.config.js"
+    );
   }
-
-  if (config.fonts.urls) {
-    console.log(chalk.green("\ninfo"), "Converting urls\n");
-
-    const convertedLinks = await Promise.all(convertLink(config.fonts.urls));
-
-    fonts = fonts.concat(convertedLinks);
-  }
-
-  downloadFonts(fonts);
 };

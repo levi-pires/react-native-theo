@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 const commander = require("commander");
-const packageJ = require("./package.json");
+const packageJson = require("./package.json");
 
 const converter = require("./cli-src/converter");
 const initializer = require("./cli-src/initializer");
 const linker = require("./cli-src/linker");
 const descriptions = require("./cli-src/descriptions");
 
-commander.version(packageJ.version);
+commander.version(packageJson.version);
 
 commander
   .command("convert-tokens")
@@ -28,5 +28,7 @@ commander
   .option("-f, --force", descriptions.force)
   .description(descriptions.init)
   .action(initializer);
+
+console.log("react-native-theo v" + packageJson.version);
 
 commander.parse(process.argv);

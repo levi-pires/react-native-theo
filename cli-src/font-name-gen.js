@@ -13,11 +13,13 @@ const fontWeights = {
  *
  * not tested on IOS
  */
-export function renderNativeFont(fontSet) {
-  return {
-    fontFamily: `${fontSet.fontFamily.split(" ").join("-")}-${
+module.exports = {
+  /**
+   * @param {{fontFamily: string; fontWeight: FontWeights; italic: boolean;}} fontSet
+   */
+  render: (fontSet) => {
+    return `${fontSet.fontFamily.split(" ").join("-")}-${
       fontWeights[fontSet.fontWeight]
-    }${fontSet.italic ? "-Italic" : ""}`,
-    ...fontSet.fontWeight,
-  };
-}
+    }${fontSet.italic ? "-Italic" : ""}`;
+  },
+};

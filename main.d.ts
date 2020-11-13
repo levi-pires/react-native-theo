@@ -17,4 +17,9 @@ declare type FontSet = {
  *
  * not tested on IOS
  */
-export declare function renderNativeFont(fontSet: FontSet): string;
+export declare function renderNativeFont(
+  fontSet: FontSet
+): {
+  fontFamily: string;
+  fontWeight: string;
+};

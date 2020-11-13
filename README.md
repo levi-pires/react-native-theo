@@ -18,17 +18,15 @@ First of all, start the project with `yarn theo-native init`. This command gener
 
 ### Link Fonts
 
-Before linking, you will have to set up the [react-native.config.js](#react-native-configuration) to link fonts properly. If you already have it you can skip this step.
+Before linking, you will have to set up the [react-native.config.js](#react-native-configuration) to link fonts properly. If you already have it set up you can skip this step.
 
-To link the fonts, run `yarn theo-native link-fonts`.
+To link the fonts, run `yarn theo-native link-fonts|link`.
 
 > Note: I highly recommend you to use Google Fonts links
->
-> Note: The _.yml_ files that will be used on linking must follow [this](#font-token) format
 
 ### Convert Tokens
 
-This part is pretty straightforward. Just run `yarn theo-native convert-tokens`
+This part is pretty straightforward. Just run `yarn theo-native convert-tokens|convert`
 
 > Example:
 >
@@ -63,16 +61,21 @@ const { renderNativeFont } = require('react-native-theo')
 
 const styles = {
   foo: {
-    fontFamily: renderNativeFont({
+    ...renderNativeFont({
       fontFamily: 'Roboto';
       fontWeight: '600';
       italic: true;
-    }) // output: Roboto-SemiBold-Italic
+    }) /*
+        output: {
+          fontFamily: Roboto-SemiBold-Italic,
+          fontWeight: '600'
+        }
+        */
   }
 }
 ```
 
-## Font Token
+<!-- ## Font Token
 
 ```yaml
 # archivo.yml
@@ -96,7 +99,7 @@ props:
       format: ttf
     type: object
     category: font
-```
+``` -->
 
 ## Default Configuration File
 
@@ -118,8 +121,11 @@ module.exports = {
   // You can declare both files and urls, but you cannot declare
   // 'fonts: {}' if you are going to use 'theo-native link-fonts'
   fonts: {
-    files: ["./tokens/fonts/index.yml"],
-    urls: ["https://fonts.googleapis.com/css2?family=Roboto&display=swap"],
+    files: ["./tokens/brand-01/typography/index.yml"],
+    urls: [
+      "https://fonts.googleapis.com/css2?family=Roboto",
+      "https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,900;1,700",
+    ],
   },
 };
 ```
